@@ -1,10 +1,11 @@
-Post-hoc pruning module for adapting CLOCQ to entity linking
+Pruning Module for adapting CLOCQ to Entity Linking
 ============
 
 # Description
 This repository contains the code for our submission to the [SMART 2022 Task](https://smart-task.github.io/2022/),
 and builds upon the [CLOCQ repository](https://github.com/PhilippChr/CLOCQ).
-
+It contains code for a post-hoc pruning module, that operates on the CLOCQ outputs and prunes noisy linkings, to improve precision
+on entity linking tasks.
 
 In case of any questions, please [let us know](mailto:pchristm@mpi-inf.mpg.de).
 
@@ -20,7 +21,7 @@ Clone the repo via:
     conda activate clocq
 
     # install dependencies
-	git clone https://github.com/PhilippChr/CLOCQ.git
+    git clone https://github.com/PhilippChr/CLOCQ.git
     cd CLOCQ/
     pip install -e .
     cd ..
@@ -29,7 +30,7 @@ Clone the repo via:
 
 Pytorch is required as well:
 ```bash
-	# install PyTorch without CUDA
+    # install PyTorch without CUDA
     conda install pytorch torchvision torchaudio -c pytorch
 
     # install PyTorch for CUDA 10.2 (using GPU)
@@ -43,7 +44,7 @@ Pytorch is required as well:
 First download the [SMART data](https://github.com/smart-task/smart-2022-datasets/tree/main/EL_entity_linking/wikidata) and put it in `./data`.
 You can use the following script, that also downloads the trained model and initializes required folders.
 ```bash
-	bash initialize.sh
+    bash initialize.sh
 ```
 
 Next, split the original train set in a train and dev split:
