@@ -1,0 +1,22 @@
+# CLOCQ parameters
+clocq_url: "https://clocq.mpi-inf.mpg.de/api"
+clocq_port: "443"
+clocq_k: 1
+clocq_p: 1 # p controls the amount of KB facts returned; for linking tasks, there is no point in returning KB facts
+
+# parameters for pruning_module
+pruning_module_clocq_k: 1 # k could be set different for identifying important mentions
+
+architecture: "BART"
+max_input_length: 100
+model_path: "data/model.bin"
+
+num_train_epochs: 5
+per_device_train_batch_size: 10
+per_device_eval_batch_size: 10
+warmup_steps: 500
+weight_decay: 0.01
+
+num_beams: 20
+early_stopping: True
+no_repeat_ngram_size: 2
