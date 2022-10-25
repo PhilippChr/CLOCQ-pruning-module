@@ -51,7 +51,7 @@ class PruningDataset(torch.utils.data.Dataset):
             mentions = list()
             gold_entities = set(instance["gold_entities"])
            
-            disambiguations = instance["linkings"]
+            disambiguations = instance["kb_item_tuple"]
             for disambiguation in disambiguations:
                 if isinstance(self.k, int) and disambiguation["rank"] >= self.k:
                     continue

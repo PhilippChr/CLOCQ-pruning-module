@@ -45,7 +45,7 @@ if __name__ == "__main__":
 		# keep gold entities during training
 		if "entities" in instance:
 			instance["gold_entities"] = instance["entities"]
-		instance["linkings"] = linkings
+		instance["entities"] = linkings
 
 	# store results
 	with open(output_path, "w") as fp:

@@ -38,7 +38,7 @@ def inference(config, input_path, output_path):
     for instance in tqdm(data):
         mentions = model.inference(instance["question"])
         instance["predicted_mentions"] = mentions
-        native_clocq_linkings = instance["linkings"]
+        native_clocq_linkings = instance["kb_item_tuple"]
         instance["native_clocq_linkings"] = native_clocq_linkings
         instance["entities"] = _prune_linkings(config, native_clocq_linkings, mentions)
 
