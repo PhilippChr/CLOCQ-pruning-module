@@ -38,7 +38,7 @@ def inference(config, input_path, output_path):
     for instance in tqdm(data):
         mentions = model.inference(instance["question"])
         instance["predicted_mentions"] = mentions
-        native_clocq_linkings = instance["entities"]
+        native_clocq_linkings = instance["linkings"]
         instance["native_clocq_linkings"] = native_clocq_linkings
         instance["entities"] = _prune_linkings(config, native_clocq_linkings, mentions)
 
@@ -49,26 +49,26 @@ def inference(config, input_path, output_path):
 def _prune_linkings(config, linkings, mentions):
     """Prune the linkings provided by the original CLOCQ method using the predicted mentions."""
     mentions = set([mention.lower() for mention in mentions])
-    linkings = set()
-    for disambiguation in disambiguations:
+    output_linkings = set()
+    for linking in linkings:
         # apply k (don't consider rank-5 results if k=1)
-        if isinstance(config["clocq_k"], int) and disambiguation["rank"] >= config["clocq_k"]:
+        if isinstance(config["clocq_k"], int) and linking["rank"] >= config["clocq_k"]:
             continue
         else:
             # check for exact match
-            if disambiguation["question_word"].lower() in mentions:
-                linkings.add(disambiguation["item"]["id"])
+            if linking["question_word"].lower() in mentions:
+                output_linkings.add(linking["item"]["id"])
             else:
                 # relaxed match: linking mention appears in predicted mention
                 for mention in mentions:
-                    if disambiguation["question_word"].lower() in mention:
-                        linkings.add(disambiguation["item"]["id"])
+                    if linking["question_word"].lower() in mention:
+                        output_linkings.add(linking["item"]["id"])
                 
                 # relaxed match: predicted mention appears in linking mention
                 for mention in mentions:
-                    if mention in disambiguation["question_word"].lower():
-                        linkings.add(disambiguation["item"]["id"])
-    return list(linkings)
+                    if mention in linking["question_word"].lower():
+                        output_linkings.add(linking["item"]["id"])
+    return list(output_linkings)
 
 def _load(model):
     """Load the model."""

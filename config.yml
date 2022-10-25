@@ -5,7 +5,7 @@ clocq_k: 1
 clocq_p: 1 # p controls the amount of KB facts returned; for linking tasks, there is no point in returning KB facts
 
 # parameters for pruning_module
-pruning_module_clocq_k: 1 # k could be set different for identifying important mentions
+pruning_module_clocq_k: 1 # k could be set different for identifying important mentions during training
 
 architecture: "BART"
 max_input_length: 100

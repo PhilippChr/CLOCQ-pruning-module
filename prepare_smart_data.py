@@ -16,9 +16,9 @@ dev_data = data[:NUM_DEV_SAMPLE]
 train_data = data[NUM_DEV_SAMPLE:]
 
 # store new splits
-input_path = "data/SMART2022-EL-wikidata-train-split.json"
+output_path = "data/SMART2022-EL-wikidata-train-split.json"
 with open(output_path, "w") as fp:
 	fp.write(json.dumps(train_data, indent=4))
-input_path = "data/SMART2022-EL-wikidata-dev-split.json"
+output_path = "data/SMART2022-EL-wikidata-dev-split.json"
 with open(output_path, "w") as fp:
 	fp.write(json.dumps(dev_data, indent=4))

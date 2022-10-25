@@ -8,7 +8,7 @@ class PruningDataset(torch.utils.data.Dataset):
     def __init__(self, config, tokenizer, path):
         self.tokenizer = tokenizer
 
-        self.k = config["k"]
+        self.k = config["pruning_module_clocq_k"]
         self.config = config
 
         input_encodings, output_encodings, dataset_length = self._load_data(path)
@@ -51,7 +51,7 @@ class PruningDataset(torch.utils.data.Dataset):
             mentions = list()
             gold_entities = set(instance["gold_entities"])
            
-            disambiguations = instance["kb_item_tuple"]
+            disambiguations = instance["linkings"]
             for disambiguation in disambiguations:
                 if isinstance(self.k, int) and disambiguation["rank"] >= self.k:
                     continue
