@@ -8,7 +8,7 @@ class PruningDataset(torch.utils.data.Dataset):
     def __init__(self, config, tokenizer, path):
         self.tokenizer = tokenizer
 
-        self.k = config["k"]
+        self.k = config["clocq_k"]
         self.config = config
 
         input_encodings, output_encodings, dataset_length = self._load_data(path)

@@ -4,6 +4,9 @@ clocq_port: "443"
 clocq_k: 1
 clocq_p: 1 # p controls the amount of KB facts returned; for linking tasks, there is no point in returning KB facts
 
+host: "<HOSTNAME>"
+port: "7757"
+
 # parameters for pruning_module
 pruning_module_clocq_k: 1 # k could be set different for identifying important mentions
 
