@@ -25,9 +25,9 @@ clocq = CLOCQInterfaceClient(config["clocq_url"], config["clocq_port"])
 @app.route("/entity_linking", methods=["GET", "POST"])
 def entity_linking():
 	if request.json:
-        params_dict = request.json
-    else:
-        params_dict = request.args
+		params_dict = request.json
+	else:
+		params_dict = request.args
 	# load question
 	question = params_dict.get("question")
 	if question is None:
@@ -62,9 +62,9 @@ def entity_linking():
 @app.route("/relation_linking", methods=["GET", "POST"])
 def relation_linking():
 	if request.json:
-        params_dict = request.json
-    else:
-        params_dict = request.args
+		params_dict = request.json
+	else:
+		params_dict = request.args
 	# load question
 	question = params_dict.get("question")
 	if question is None:
