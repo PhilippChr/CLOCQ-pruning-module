@@ -8,7 +8,7 @@ host: "<HOSTNAME>"
 port: "7757"
 
 # parameters for pruning_module
-pruning_module_clocq_k: 1 # k could be set different for identifying important mentions
+pruning_module_clocq_k: 1 # k could be set different for identifying important mentions during training
 
 architecture: "BART"
 max_input_length: 100

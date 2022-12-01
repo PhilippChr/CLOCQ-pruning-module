@@ -114,10 +114,10 @@ class PruningModel(torch.nn.Module):
         )[0]
 
         # obtain question words
-        mentions = self.get_mentions(mentions_text)
+        mentions = self._get_mentions(mentions_text)
         return mentions
 
-    def get_mentions(self, mentions_text):
+    def _get_mentions(self, mentions_text):
         mentions = mentions_text.split("|")
         mentions = [m.strip() for m in mentions]
         return mentions

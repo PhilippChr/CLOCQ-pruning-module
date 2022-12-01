@@ -1,10 +1,11 @@
 # Usage: python run_clocq.py <PATH_TO_INPUT> <PATH_TO_OUTPUT> [<PATH_TO_CONFIG>]
+import sys
 import json
 
 from tqdm import tqdm
 from clocq.interface.CLOCQInterfaceClient import CLOCQInterfaceClient
 
-from main import get_config
+from pruning_module import get_config
 
 def prune_predicates(linkings):
 	"""Function to prune predicates from results."""
@@ -20,7 +21,7 @@ if __name__ == "__main__":
 	# load params
 	input_path = sys.argv[1]
 	output_path = sys.argv[2]
-	config_path = sys.argv[3] if len(sys.argv) > 2 else "config.yml"
+	config_path = sys.argv[3] if len(sys.argv) > 3 else "config.yml"
 	config = get_config(config_path)
 
 	# initiate CLOCQ
