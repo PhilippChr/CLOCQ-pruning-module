@@ -31,7 +31,7 @@ def entity_linking():
 	# load question
 	question = params_dict.get("question")
 	if question is None:
-		return None
+		return jsonify(None)
 	# load parameters: possibility to give specific parameters
 	parameters = params_dict.get("parameters")
 	if parameters is None:
@@ -43,7 +43,10 @@ def entity_linking():
 		parameters = new_parameters
 	# load k: num. of relations per mention -> prefer explicitly given k
 	if "k" in params_dict:
+		k = params_dict.get("k")
 		parameters["k"] = params_dict.get("k")
+	else:
+		k = "AUTO"
 	parameters["p_setting"] = 1
 
 	# run CLOCQ
@@ -51,7 +54,7 @@ def entity_linking():
 	linkings = res["kb_item_tuple"]
 
 	# prune irrelevant linkings
-	linkings, mentions = pruning_module.get_entity_linkings(question, linkings)
+	linkings, mentions = pruning_module.get_entity_linkings(question, linkings, k)
 	res = {
 		"linkings": linkings,
 		"mentions": mentions
@@ -68,13 +71,13 @@ def relation_linking():
 	# load question
 	question = params_dict.get("question")
 	if question is None:
-		return None
+		return jsonify(None)
 	# load k: num. of relations per mention
 	top_ranked = params_dict.get("top_ranked")
-	if top_ranked is None or top_ranked:
-		top_ranked = True
-	else:
+	if top_ranked is not None and (top_ranked == False or top_ranked == "0" or top_ranked == "False"):
 		top_ranked = False
+	else:
+		top_ranked = True
 	# load parameters: possibility to give specific parameters
 	parameters = params_dict.get("parameters")
 	if parameters is None:

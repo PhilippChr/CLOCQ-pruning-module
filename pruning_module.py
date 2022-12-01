@@ -41,7 +41,7 @@ class PruningModule:
             clocq_linkings = instance["kb_item_tuple"]
             instance["clocq_linkings"] = clocq_linkings
 
-            entity_linkings, predicted_mentions = self.get_entity_linkings(instance["question"], clocq_linkings)
+            entity_linkings, predicted_mentions = self.get_entity_linkings(instance["question"], clocq_linkings, self.config["clocq_k"])
             instance["predicted_mentions"] = predicted_mentions
             instance["entities"] = [linking["item"]["id"] for linking in entity_linkings]
 
@@ -56,7 +56,7 @@ class PruningModule:
         predicted_mentions = self.model.inference(question)
         return predicted_mentions
 
-    def get_entity_linkings(self, question, linkings):
+    def get_entity_linkings(self, question, linkings, k="AUTO"):
         """Prune the entity linkings provided by the original CLOCQ method using the predicted mentions."""
         # load model
         self._load()
@@ -72,7 +72,7 @@ class PruningModule:
         output_linkings = list()
         for linking in entity_linkings:
             # apply k (don't consider rank-5 results if k=1)
-            if isinstance(self.config["clocq_k"], int) and linking["rank"] >= self.config["clocq_k"]:
+            if isinstance(k, int) and linking["rank"] >= k:
                 continue
             else:
                 # check for exact match
