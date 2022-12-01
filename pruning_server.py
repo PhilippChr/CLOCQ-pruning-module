@@ -22,15 +22,18 @@ clocq = CLOCQInterfaceClient(config["clocq_url"], config["clocq_port"])
 
 
 """API endpoints"""
-@app.route("/entity_linking", methods=["POST"])
+@app.route("/entity_linking", methods=["GET", "POST"])
 def entity_linking():
-	json_dict = request.json
+	if request.json:
+        params_dict = request.json
+    else:
+        params_dict = request.args
 	# load question
-	question = json_dict.get("question")
+	question = params_dict.get("question")
 	if question is None:
 		return None
 	# load parameters: possibility to give specific parameters
-	parameters = json_dict.get("parameters")
+	parameters = params_dict.get("parameters")
 	if parameters is None:
 		parameters = copy.deepcopy(DEF_PARAMS)
 	else:
@@ -39,8 +42,8 @@ def entity_linking():
 			new_parameters[key] = parameters[key]
 		parameters = new_parameters
 	# load k: num. of relations per mention -> prefer explicitly given k
-	if "k" in json_dict:
-		parameters["k"] = json_dict.get("k")
+	if "k" in params_dict:
+		parameters["k"] = params_dict.get("k")
 	parameters["p_setting"] = 1
 
 	# run CLOCQ
@@ -56,21 +59,24 @@ def entity_linking():
 	return jsonify(res)
 
 
-@app.route("/relation_linking", methods=["POST"])
+@app.route("/relation_linking", methods=["GET", "POST"])
 def relation_linking():
-	json_dict = request.json
+	if request.json:
+        params_dict = request.json
+    else:
+        params_dict = request.args
 	# load question
-	question = json_dict.get("question")
+	question = params_dict.get("question")
 	if question is None:
 		return None
 	# load k: num. of relations per mention
-	top_ranked = json_dict.get("top_ranked")
+	top_ranked = params_dict.get("top_ranked")
 	if top_ranked is None or top_ranked:
 		top_ranked = True
 	else:
 		top_ranked = False
 	# load parameters: possibility to give specific parameters
-	parameters = json_dict.get("parameters")
+	parameters = params_dict.get("parameters")
 	if parameters is None:
 		parameters = copy.deepcopy(DEF_PARAMS)
 	else:
